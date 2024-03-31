@@ -18,10 +18,11 @@ Below is a screenshot of the dashboard:
 
 Our dashboard is updated daily through a batch data pipeline, scheduled to automatically run each day by executing the following steps:
 
-1. Source data is obtained through an API call. It is then parsed, cleaned, and transferred to our selected data lake, Google Cloud Storage, utilizing Python.
-2. Once all the data is in the data lake, a clustered table is created in the data warehouse, BigQuery.
-3. Scheduled dbt (data build tool) jobs transform the data into formats optimized for dashboard use.
-4. The dashboard's visualizations are frequently refreshed to display the most current data.
+1. Infrastructure, including a Google Cloud Storage bucket, a BigQuery dataset, and a virtual machine in the cloud, is set up by Terraform scripts. The pipeline is transferred to the virtual machine as part of the Terraform configuration.
+2. Within the pipeline, source data is obtained through an API call. It is then parsed, cleaned, and transferred to our selected data lake, Google Cloud Storage, utilizing Python.
+3. Once all the data is in the data lake, a clustered table is created in the data warehouse, BigQuery.
+4. Scheduled dbt (data build tool) jobs transform the data into formats optimized for dashboard use.
+5. The dashboard's visualizations are frequently refreshed to display the most current data.
 
 
 ## Technologies

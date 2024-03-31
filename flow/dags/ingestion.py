@@ -26,6 +26,7 @@ import subprocess
 
 def git_activity_ingestion():
     project_id = 'github-pipeline-demo' ##### PLEASE CHANGE TO YOUR GCP PROJECT ID #####
+    #project_id = 'github-activities-412623' ##### PLEASE CHANGE TO YOUR GCP PROJECT ID #####
     bucket_name = 'git-storage-bucket'
     yesterday = date.today() - timedelta(days=1)
     airflow_path = '/tmp'
@@ -34,17 +35,14 @@ def git_activity_ingestion():
         """
         This function truncates the payload field for certain event types to make each row shorter
         """
-        #obj["actor"] = {key: obj["actor"][key] for key in ['id', 'login', 'display_login', 'url']}
-        """
-        language_url = f"https://api.github.com/repos/{obj['repo']['name']}/languages"
-        response = requests.get(language_url)
-        if response.status_code == 200:
-            repo_languages = response.json()
-        else:
-            print(f"Failed to fetch data for repo {obj['repo']['name']}. Status code: {response.status_code}")
-            repo_languages = {}
-        obj["repo"]["languages"] = repo_languages
-        """
+        #language_url = f"https://api.github.com/repos/{obj['repo']['name']}/languages"
+        #response = requests.get(language_url)
+        #if response.status_code == 200:
+        #    repo_languages = response.json()
+        #else:
+        #    print(f"Failed to fetch data for repo {obj['repo']['name']}. Status code: {response.status_code}")
+        #    repo_languages = {}
+        #obj["repo"]["languages"] = repo_languages
         if obj["type"] == 'CommitCommentEvent':
             try:
                 obj["payload"] = {"comment": {"url": obj["payload"]["comment"]["url"]}}
@@ -116,7 +114,7 @@ def git_activity_ingestion():
     @task
     def download_data(date: date) -> list:
         """
-        This functions download hourly data files and returns a list of paths for the day
+        This function downloads hourly data files and returns a list of paths for the day
         """
         daily_folder = f'{date.year}-{date.month:02d}-{date.day:02d}/'
         daily_folder_path = os.path.join(airflow_path, daily_folder)
@@ -280,6 +278,9 @@ def git_activity_ingestion():
 
     @task
     def upload_to_gcs(date: date, path_list: list, bucket_name: str):
+        """
+        This function uploads newline delimited json files into google cloud storage bucket
+        """
         client = storage.Client()
         bucket = client.bucket(bucket_name)
         
@@ -312,6 +313,10 @@ def git_activity_ingestion():
     
     @task
     def create_materialized_bq_table(date: date, bucket_name: str):
+        """
+        This function creates a clustered BigQuery table from the files we just uploaded to google
+        cloud storage in the last task
+        """
         client = bigquery.Client()
 
         dataset_id = f'{project_id}.git_activities_warehouse'
