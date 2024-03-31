@@ -6,6 +6,8 @@ Github is the world's largest source code host. It is commonly used to host open
 
 GitHub, being the most popular platform for creating, storing, managing, and sharing code, serves as the focal point of this dashboard, which aims to illustrate how developers worldwide use GitHub. Our dashboard tracks the daily total count of public activities, identifies the top 10 users who authored the most commits, and lists the 10 most popular repositories that were forked each day.
 
+<img src="instructions/07-dashboard.png" alt="07-dashboard" width="700" align="center"/>
+
 ---
 
 ## Data pipeline description
@@ -31,16 +33,19 @@ Our dashboard is updated daily through a batch data pipeline, scheduled to autom
 ---
 ## Reproduction
 
-### Prerequisites: You have installed and set up the following tool - 
+### Prerequisites: 
+You have installed and set up the following tool - 
 - Docker
 - Terraform
 - GCP account
 - dbt cloud account
 
+
 ### Step 1 - Create a new GCP project
 
 - Once your project is created, keep a note of your project id
-<img src="instructions/01-new-gcp-project.png" alt="01-new-gcp-project" width="600"/>
+&nbsp;&nbsp;&nbsp;<img src="instructions/01-new-gcp-project.png" alt="01-new-gcp-project" width="600"/>
+
 
 ### Step 2 - Set up the pipeline using Terraform 
     
@@ -57,6 +62,7 @@ $ terraform init
 $ terraform plan
 $ terraform apply
 
+
 ### Step 3 - Monitor the pipeline job
     
 1. Once the terraform set-up completes, the output in the terminal will have your virtual machine's external ip. You will need it for the Airflow web UI.  
@@ -70,12 +76,15 @@ $ terraform apply
 
 <img src="instructions/05-bigquery-table.png" alt="05-bigquery-table" width="400"/>
 
+
 ### Step 4 - Transformation in dbt
     
 1. the repo for dbt is [here](https://github.com/yh2527/dbt-github-daily-activities)
 2. Please refer to the dbt instruction [here](https://docs.google.com/document/d/1y0DqZH9GWhRzLZW4bXWBNjSL7Z85UJ_zRSD654t6Kzg/edit?usp=sharing)
 
+
 ### Step 5 - Dashboard
 - Sample dashboard can be found [here](https://lookerstudio.google.com/s/hu76D8e84kU)
 
-Thank you! If you have any question, please message me in the class Slack channel @Cookie Monster 
+---
+Thank you! If you have any question or any trouble reproducing this pipeline, please message me in the class Slack channel @Cookie Monster 
