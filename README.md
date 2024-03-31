@@ -39,7 +39,7 @@ Our dashboard is updated daily through a batch data pipeline, scheduled to autom
 
 ### Step 1 - Create a new GCP project
 
-- Please use "github-pipeline-demo" as your new project name for simplicity. Once your project is created, keep a note of your project id
+- Once your project is created, keep a note of your project id
 <img src="instructions/01-new-gcp-project.png" alt="01-new-gcp-project" width="600"/>
 
 ### Step 2 - Set up the pipeline using Terraform 
@@ -77,3 +77,4 @@ Our dashboard is updated daily through a batch data pipeline, scheduled to autom
 ### Step 5 - Dashboard
 - Sample dashboard can be foud [here](https://lookerstudio.google.com/s/hu76D8e84kU)
 
+Thank you! If you have any question, please message me in the class Slack channel @Cookie Monster 
