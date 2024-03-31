@@ -6,13 +6,13 @@ Github is the world's largest source code host. It is commonly used to host open
 
 GitHub, being the most popular platform for creating, storing, managing, and sharing code, serves as the focal point of this dashboard, which aims to illustrate how developers worldwide use GitHub. Our dashboard tracks the daily total count of public activities, identifies the top 10 users who authored the most commits, and lists the 10 most popular repositories that were forked each day.
 
-
-&nbsp;&nbsp;&nbsp;<img src="instructions/07-dashboard.png" alt="07-dashboard" width="700" align="center"/>
+Below is a screenshot of the dashboard:
+<img src="instructions/07-dashboard.png" alt="07-dashboard" width="700" align="center"/>
 
 
 ---
 
-## Data pipeline description
+## Data Pipeline Description
 
 Our dashboard is updated daily through a batch data pipeline, scheduled to automatically run each day by executing the following steps:
 
@@ -24,13 +24,13 @@ Our dashboard is updated daily through a batch data pipeline, scheduled to autom
 
 ## Technologies
 
-    - Cloud Platform: Google Cloud Platform (GCP)
-    - Infrastructure as Code (IaC): Terraform
-    - Workflow Orchestration: Airflow, 6 steps in the DAG
-    - Data Warehouse: BigQuery, data clustered by activity type
-    - Batch Transformation: dbt (data build tool)
-    - Visualization: Google Looker Studio
-    - Programming Languages: Python, Bash Scripting
+- Cloud Platform: Google Cloud Platform (GCP)
+- Infrastructure as Code (IaC): Terraform
+- Workflow Orchestration: Airflow, 6 steps in the DAG
+- Data Warehouse: BigQuery, data clustered by activity type
+- Batch Transformation: dbt (data build tool)
+- Visualization: Google Looker Studio
+- Programming Languages: Python, Bash Scripting
 
 ---
 ## Reproduction
