@@ -39,13 +39,13 @@ Our dashboard is updated daily through a batch data pipeline, scheduled to autom
 
 ### Step 1 - Create a new GCP project
 
-    - Once your project is created, keep a note of your project id
-    <img src="instructions/01-new-gcp-project.png" alt="01-new-gcp-project"/>
+- Once your project is created, keep a note of your project id
+<img src="instructions/01-new-gcp-project.png" alt="01-new-gcp-project"/>
 
 ### Step 2 - Set up the pipeline using Terraform 
     
-    - change your project id, regions in terraform.tfvars
-    <img src="instructions/02-terraform.tfvars.png" alt="02-terraform.tfvars"/>
+- change your project id, regions in terraform.tfvars
+<img src="instructions/02-terraform.tfvars.png" alt="02-terraform.tfvars"/>
    
     - change your username and passwork for logging into Airflow web UI in flow/.env
     
