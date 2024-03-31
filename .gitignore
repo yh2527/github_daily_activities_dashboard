@@ -1,0 +1,7 @@
+service_account_key/
+ssh/
+data/
+__pycache__
+flow/logs/
+terraform/.terraform*
+terraform/terraform.tfstate*
