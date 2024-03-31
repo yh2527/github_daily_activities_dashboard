@@ -49,20 +49,20 @@ It is assumed that you have installed, set up, and have access to the following 
 
 - Once your project is created, keep a note of your project id
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="instructions/01-new-gcp-project.png" alt="01-new-gcp-project" width="500"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="instructions/01-new-gcp-project.png" alt="01-new-gcp-project" width="500"/>
 
 
 ### Step 2 - Set up the pipeline using Terraform 
     
 1. change your project id, regions in terraform.tfvars
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="instructions/02-terraform.tfvars.png" alt="02-terraform.tfvars" width="700"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="instructions/02-terraform.tfvars.png" alt="02-terraform.tfvars" width="700"/>
    
 2. change your username and passwork for logging into Airflow web UI in flow/.env
 
 3. change your project id in /flow/dags/ingestion.py
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="instructions/04-dag-var.png" alt="04-dag-var" width="600"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="instructions/04-dag-var.png" alt="04-dag-var" width="600"/>
     
 4. in the terminal, navigate into the terraform folder and run the following commands
 $ terraform init
@@ -74,16 +74,16 @@ $ terraform apply
     
 1. Once the terraform set-up completes, the output in the terminal will have your virtual machine's external ip. You will need it for the Airflow web UI.  
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="instructions/03-terraform-complete.png" alt="03-terraform-complete" width="500"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="instructions/03-terraform-complete.png" alt="03-terraform-complete" width="500"/>
     
 2. Wait a few minutes for the Airflow docker to bring up the web UI. Then access the UI through http://(change to your vm ip)35.235.66.228:8080/ using the username and passwork in the flow/.env file.
 3. Once all 6 DAG tasks finish running, data files should be in google cloud storage and a clustered table should have been created in BigQuery. Partition is not used because it doesn't fit our use case for this pipeline.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="instructions/06-airflow-dag.png" alt="06-airflow-dag" width="300"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="instructions/06-airflow-dag.png" alt="06-airflow-dag" width="300"/>
 
 4. Confirm that data files are in gcs bucket and data table exists in BigQuery.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="instructions/05-bigquery-table.png" alt="05-bigquery-table" width="350"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="instructions/05-bigquery-table.png" alt="05-bigquery-table" width="350"/>
 
 
 ### Step 4 - Transformation in dbt
