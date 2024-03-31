@@ -31,11 +31,11 @@ Our dashboard is updated daily through a batch data pipeline, scheduled to autom
 ---
 ## Reproduction
 
-### Prerequisites:
-    - Docker
-    - Terraform
-    - GCP account
-    - dbt cloud account
+### Prerequisites: You have installed and set up the following tool - 
+- Docker
+- Terraform
+- GCP account
+- dbt cloud account
 
 ### Step 1 - Create a new GCP project
 
@@ -53,9 +53,9 @@ Our dashboard is updated daily through a batch data pipeline, scheduled to autom
 <img src="instructions/04-dag-var.png" alt="04-dag-var" width="600"/>
     
 4. in the terminal, navigate into the terraform folder and run the following commands
-    $ terraform init
-    $ terraform plan
-    $ terraform apply
+$ terraform init
+$ terraform plan
+$ terraform apply
 
 ### Step 3 - Monitor the pipeline job
     
@@ -65,16 +65,17 @@ Our dashboard is updated daily through a batch data pipeline, scheduled to autom
     
 2. Wait a few minutes for the Airflow docker to bring up the web UI. Then access the UI through http://vm_external_ip:8080/
 3. Once all 6 DAG tasks finish running, data files should be in google cloud storage and a clustered table should have been created in BigQuery. Partition is not used because it doesn't fit our use case for this pipeline.
+<img src="instructions/06-airflow-dag.png" alt="06-airflow-dag" width="300"/>
 4. Confirm that data files are in gcs bucket and data table exists in BigQuery.
 
-<img src="instructions/05-bigquery-table.png" alt="05-bigquery-table" width="600"/>
+<img src="instructions/05-bigquery-table.png" alt="05-bigquery-table" width="400"/>
 
 ### Step 4 - Transformation in dbt
     
-1. the repo for dbt is here [here](https://github.com/yh2527/dbt-github-daily-activities)
+1. the repo for dbt is [here](https://github.com/yh2527/dbt-github-daily-activities)
 2. Please refer to the dbt instruction [here](https://docs.google.com/document/d/1y0DqZH9GWhRzLZW4bXWBNjSL7Z85UJ_zRSD654t6Kzg/edit?usp=sharing)
 
 ### Step 5 - Dashboard
-- Sample dashboard can be foud [here](https://lookerstudio.google.com/s/hu76D8e84kU)
+- Sample dashboard can be found [here](https://lookerstudio.google.com/s/hu76D8e84kU)
 
 Thank you! If you have any question, please message me in the class Slack channel @Cookie Monster 
