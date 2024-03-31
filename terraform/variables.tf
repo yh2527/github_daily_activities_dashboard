@@ -1,7 +1,6 @@
 variable "project_id" {
   type        = string
-  description = "The name of the project"
-  default     = "github-activities-412623"
+  description = "The name of the project (source: terraform.tfvars)"
 }
 
 variable "account_id" {

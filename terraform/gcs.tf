@@ -6,7 +6,7 @@
 # to delete objects older than 30 days, with an option for forced destruction of the bucket.
 
 resource "google_storage_bucket" "data-lake-bucket" {
-  name                        = "${var.data_lake_bucket}_${var.project_id}"
+  name                        = "${var.data_lake_bucket}"
   location                    = var.region
   storage_class               = var.storage_class
   uniform_bucket_level_access = true

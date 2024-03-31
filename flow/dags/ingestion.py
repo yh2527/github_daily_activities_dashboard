@@ -16,7 +16,7 @@ import subprocess
 
 @dag(
     #schedule=None,
-    schedule_interval='30 1 * * *',  # daily run UTC time
+    schedule_interval='30 7 * * *',  # daily run UTC time
     #schedule_interval='/10 * * * *',  # run every 10 minutes
     start_date=pendulum.datetime(2024, 3, 28, tz="UTC"),
     is_paused_upon_creation=False,
@@ -25,7 +25,7 @@ import subprocess
 )
 
 def git_activity_ingestion():
-    bucket_name = 'git-storage-bucket_github-activities-412623'
+    bucket_name = 'git-storage-bucket'
     yesterday = date.today() - timedelta(days=1)
     airflow_path = '/tmp'
 
@@ -326,11 +326,16 @@ def git_activity_ingestion():
             bigquery.SchemaField("type", "STRING", mode="NULLABLE"),
             bigquery.SchemaField("id", "INTEGER", mode="NULLABLE"),
         ]
+
+        table = bigquery.Table(table_ref)
+        table.clustering_fields = ["type"]
+
         external_config = bigquery.ExternalConfig("NEWLINE_DELIMITED_JSON")
         external_config.source_uris = [
             f"gs://{bucket_name}/{date.year}-{date.month:02d}-{date.day:02d}/*.ndjson"
         ]
         external_config.schema = schema
+        table.external_data_configuration = external_config
 
         try:
             client.delete_table(table_ref, not_found_ok=True)
@@ -338,19 +343,53 @@ def git_activity_ingestion():
         except NotFound:
             print(f"Table {table_id} was not found.")
 
-        table = bigquery.Table(table_ref)
-        table.external_data_configuration = external_config
 
         created_table = client.create_table(table)  # API request
         print(f"Created table {created_table.full_table_id}")
-        
     
+    @task
+    def create_materialized_bq_table(date: date, bucket_name: str):
+        client = bigquery.Client()
+
+        dataset_id = 'github-activities-412623.git_activities_warehouse'
+        table_id = 'github-today'
+        table_ref = f"{dataset_id}.{table_id}"
+
+        schema = [
+            bigquery.SchemaField("org", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("public", "BOOLEAN", mode="NULLABLE"),
+            bigquery.SchemaField("repo", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("payload", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("actor", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("created_at", "TIMESTAMP", mode="NULLABLE"),
+            bigquery.SchemaField("type", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("id", "INTEGER", mode="NULLABLE"),
+        ]
+
+        job_config = bigquery.LoadJobConfig(
+            schema=schema,
+            source_format=bigquery.SourceFormat.NEWLINE_DELIMITED_JSON,
+            clustering_fields=["type"],  # Specifies the columns to cluster by
+        )
+
+        uri = f"gs://{bucket_name}/{date.year}-{date.month:02d}-{date.day:02d}/*.ndjson"
+
+        load_job = client.load_table_from_uri(
+            uri,
+            table_ref,
+            job_config=job_config
+        )  # API request
+
+        load_job.result()  # Waits for the job to complete
+
+        print(f"Created materialized table {table_id} and loaded data from {uri}")        
+        
     path_list = download_data(yesterday)
     raw_data_path = daily_data(yesterday, path_list)
     norm_data_path = normalize_data(yesterday, raw_data_path)
     ndjson_path = convert_json_to_ndjson(yesterday, norm_data_path)
     gcs_upload_status = upload_to_gcs(yesterday, ndjson_path, bucket_name)
     
-    gcs_upload_status >> create_bq_table(yesterday, bucket_name)
+    gcs_upload_status >> create_materialized_bq_table(yesterday, bucket_name)
 
 git_activity_ingestion()
