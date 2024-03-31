@@ -33,7 +33,7 @@ Our dashboard is updated daily through a batch data pipeline, scheduled to autom
 - Programming Languages: Python, Bash Scripting
 
 ---
-## Reproduction
+## How To
 
 ### Prerequisites: 
 You have installed and set up the following tool - 
@@ -71,7 +71,7 @@ $ terraform apply
 
 &nbsp;&nbsp;&nbsp;<img src="instructions/03-terraform-complete.png" alt="03-terraform-complete" width="600"/>
     
-2. Wait a few minutes for the Airflow docker to bring up the web UI. Then access the UI through http://vm_external_ip:8080/
+2. Wait a few minutes for the Airflow docker to bring up the web UI. Then access the UI through http://(change to your vm ip)35.235.66.228:8080/
 3. Once all 6 DAG tasks finish running, data files should be in google cloud storage and a clustered table should have been created in BigQuery. Partition is not used because it doesn't fit our use case for this pipeline.
 &nbsp;&nbsp;&nbsp;<img src="instructions/06-airflow-dag.png" alt="06-airflow-dag" width="300"/>
 4. Confirm that data files are in gcs bucket and data table exists in BigQuery.
