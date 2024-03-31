@@ -6,7 +6,9 @@ Github is the world's largest source code host. It is commonly used to host open
 
 GitHub, being the most popular platform for creating, storing, managing, and sharing code, serves as the focal point of this dashboard, which aims to illustrate how developers worldwide use GitHub. Our dashboard tracks the daily total count of public activities, identifies the top 10 users who authored the most commits, and lists the 10 most popular repositories that were forked each day.
 
-<img src="instructions/07-dashboard.png" alt="07-dashboard" width="700" align="center"/>
+
+&nbsp;&nbsp;&nbsp;<img src="instructions/07-dashboard.png" alt="07-dashboard" width="700" align="center"/>
+
 
 ---
 
@@ -50,12 +52,12 @@ You have installed and set up the following tool -
 ### Step 2 - Set up the pipeline using Terraform 
     
 1. change your project id, regions in terraform.tfvars
-<img src="instructions/02-terraform.tfvars.png" alt="02-terraform.tfvars" width="700"/>
+&nbsp;&nbsp;&nbsp;<img src="instructions/02-terraform.tfvars.png" alt="02-terraform.tfvars" width="700"/>
    
 2. change your username and passwork for logging into Airflow web UI in flow/.env
 
 3. change your project id in /flow/dags/ingestion.py
-<img src="instructions/04-dag-var.png" alt="04-dag-var" width="600"/>
+&nbsp;&nbsp;&nbsp;<img src="instructions/04-dag-var.png" alt="04-dag-var" width="600"/>
     
 4. in the terminal, navigate into the terraform folder and run the following commands
 $ terraform init
@@ -67,14 +69,14 @@ $ terraform apply
     
 1. Once the terraform set-up completes, the output in the terminal will have your virtual machine's external ip. You will need it for the Airflow web UI.  
 
-<img src="instructions/03-terraform-complete.png" alt="03-terraform-complete" width="600"/>
+&nbsp;&nbsp;&nbsp;<img src="instructions/03-terraform-complete.png" alt="03-terraform-complete" width="600"/>
     
 2. Wait a few minutes for the Airflow docker to bring up the web UI. Then access the UI through http://vm_external_ip:8080/
 3. Once all 6 DAG tasks finish running, data files should be in google cloud storage and a clustered table should have been created in BigQuery. Partition is not used because it doesn't fit our use case for this pipeline.
-<img src="instructions/06-airflow-dag.png" alt="06-airflow-dag" width="300"/>
+&nbsp;&nbsp;&nbsp;<img src="instructions/06-airflow-dag.png" alt="06-airflow-dag" width="300"/>
 4. Confirm that data files are in gcs bucket and data table exists in BigQuery.
 
-<img src="instructions/05-bigquery-table.png" alt="05-bigquery-table" width="400"/>
+&nbsp;&nbsp;&nbsp;<img src="instructions/05-bigquery-table.png" alt="05-bigquery-table" width="400"/>
 
 
 ### Step 4 - Transformation in dbt
