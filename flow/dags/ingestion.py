@@ -16,7 +16,7 @@ import subprocess
 
 @dag(
     #schedule=None,
-    schedule_interval='30 7 * * *',  # daily run UTC time
+    schedule_interval='30 1 * * *',  # daily run UTC time
     #schedule_interval='/10 * * * *',  # run every 10 minutes
     start_date=pendulum.datetime(2024, 3, 28, tz="UTC"),
     is_paused_upon_creation=False,
@@ -25,6 +25,7 @@ import subprocess
 )
 
 def git_activity_ingestion():
+    project_id = 'github-pipeline-demo' ##### PLEASE CHANGE TO YOUR GCP PROJECT ID #####
     bucket_name = 'git-storage-bucket'
     yesterday = date.today() - timedelta(days=1)
     airflow_path = '/tmp'
@@ -308,50 +309,12 @@ def git_activity_ingestion():
                 print(f"The file {full_input_path} does not exist.")
         return
     
-    @task
-    def create_bq_table(date: date, bucket_name: str):
-        client = bigquery.Client()
-
-        dataset_id = 'github-activities-412623.git_activities_warehouse'
-        table_id = 'github-today'
-        table_ref = f"{dataset_id}.{table_id}"
-        
-        schema = [
-            bigquery.SchemaField("org", "STRING", mode="NULLABLE"),
-            bigquery.SchemaField("public", "BOOLEAN", mode="NULLABLE"),
-            bigquery.SchemaField("repo", "STRING", mode="NULLABLE"),
-            bigquery.SchemaField("payload", "STRING", mode="NULLABLE"),
-            bigquery.SchemaField("actor", "STRING", mode="NULLABLE"),
-            bigquery.SchemaField("created_at", "TIMESTAMP", mode="NULLABLE"),
-            bigquery.SchemaField("type", "STRING", mode="NULLABLE"),
-            bigquery.SchemaField("id", "INTEGER", mode="NULLABLE"),
-        ]
-
-        table = bigquery.Table(table_ref)
-        table.clustering_fields = ["type"]
-
-        external_config = bigquery.ExternalConfig("NEWLINE_DELIMITED_JSON")
-        external_config.source_uris = [
-            f"gs://{bucket_name}/{date.year}-{date.month:02d}-{date.day:02d}/*.ndjson"
-        ]
-        external_config.schema = schema
-        table.external_data_configuration = external_config
-
-        try:
-            client.delete_table(table_ref, not_found_ok=True)
-            print(f"Table {table_id} deleted.")
-        except NotFound:
-            print(f"Table {table_id} was not found.")
-
-
-        created_table = client.create_table(table)  # API request
-        print(f"Created table {created_table.full_table_id}")
     
     @task
     def create_materialized_bq_table(date: date, bucket_name: str):
         client = bigquery.Client()
 
-        dataset_id = 'github-activities-412623.git_activities_warehouse'
+        dataset_id = f'{project_id}.git_activities_warehouse'
         table_id = 'github-today'
         table_ref = f"{dataset_id}.{table_id}"
 

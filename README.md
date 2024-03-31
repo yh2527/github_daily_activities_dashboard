@@ -39,34 +39,41 @@ Our dashboard is updated daily through a batch data pipeline, scheduled to autom
 
 ### Step 1 - Create a new GCP project
 
-- Once your project is created, keep a note of your project id
+- Please use "github-pipeline-demo" as your new project name for simplicity. Once your project is created, keep a note of your project id
 <img src="instructions/01-new-gcp-project.png" alt="01-new-gcp-project" width="600"/>
 
 ### Step 2 - Set up the pipeline using Terraform 
     
-- change your project id, regions in terraform.tfvars
-<img src="instructions/02-terraform.tfvars.png" alt="02-terraform.tfvars"/>
+1. change your project id, regions in terraform.tfvars
+<img src="instructions/02-terraform.tfvars.png" alt="02-terraform.tfvars" width="700"/>
    
-- change your username and passwork for logging into Airflow web UI in flow/.env
+2. change your username and passwork for logging into Airflow web UI in flow/.env
+
+3. change your project id in /flow/dags/ingestion.py
+<img src="instructions/04-dag-var.png" alt="04-dag-var" width="600"/>
     
-- in the terminal, navigate into the terraform folder and run the following commands
+4. in the terminal, navigate into the terraform folder and run the following commands
     $ terraform init
     $ terraform plan
     $ terraform apply
 
 ### Step 3 - Monitor the pipeline job
     
-- Once the terraform set-up completes, the output in the terminal will have your virtual machine's external ip. You will need it for the Airflow web UI.  
-<img src="instructions/03-terraform-complete.png" alt="03-terraform-complete"/>
+1. Once the terraform set-up completes, the output in the terminal will have your virtual machine's external ip. You will need it for the Airflow web UI.  
+
+<img src="instructions/03-terraform-complete.png" alt="03-terraform-complete" width="600"/>
     
-- Wait a few minutes for the Airflow docker to bring up the web UI. Then access the UI through http://vm_external_ip:8080/
-- Once all 6 DAG tasks finish running, data files should be in google cloud storage and a clustered table should have been created in BigQuery. Partition is not used because it doesn't fit our use case for this pipeline.
-- Confirm that data files are in gcs bucket and data table exists in BigQuery.
+2. Wait a few minutes for the Airflow docker to bring up the web UI. Then access the UI through http://vm_external_ip:8080/
+3. Once all 6 DAG tasks finish running, data files should be in google cloud storage and a clustered table should have been created in BigQuery. Partition is not used because it doesn't fit our use case for this pipeline.
+4. Confirm that data files are in gcs bucket and data table exists in BigQuery.
+
+<img src="instructions/05-bigquery-table.png" alt="05-bigquery-table" width="600"/>
 
 ### Step 4 - Transformation in dbt
     
-- the repo for dbt is here [here](https://github.com/yh2527/dbt-github-daily-activities)
-- Please refer to the dbt instruction [here](https://docs.google.com/document/d/1y0DqZH9GWhRzLZW4bXWBNjSL7Z85UJ_zRSD654t6Kzg/edit?usp=sharing)
+1. the repo for dbt is here [here](https://github.com/yh2527/dbt-github-daily-activities)
+2. Please refer to the dbt instruction [here](https://docs.google.com/document/d/1y0DqZH9GWhRzLZW4bXWBNjSL7Z85UJ_zRSD654t6Kzg/edit?usp=sharing)
 
-Step 5 - Dashboard
+### Step 5 - Dashboard
+- Sample dashboard can be foud [here](https://lookerstudio.google.com/s/hu76D8e84kU)
 
