@@ -337,6 +337,7 @@ def git_activity_ingestion():
         job_config = bigquery.LoadJobConfig(
             schema=schema,
             source_format=bigquery.SourceFormat.NEWLINE_DELIMITED_JSON,
+            write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE,
             clustering_fields=["type"],  # Specifies the columns to cluster by
         )
 
@@ -346,7 +347,7 @@ def git_activity_ingestion():
             uri,
             table_ref,
             job_config=job_config
-        )  # API request
+        )
 
         load_job.result()  # Waits for the job to complete
 
