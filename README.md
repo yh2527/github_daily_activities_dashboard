@@ -66,10 +66,9 @@ It is assumed that you have installed, set up, and have access to the following 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="instructions/04-dag-var.png" alt="04-dag-var" width="600"/>
     
 4. In the terminal, navigate into the terraform folder and run the following commands - 
-```bash
-$ terraform init
-$ terraform plan
-$ terraform apply
+- $ terraform init
+- $ terraform plan
+- $ terraform apply
 
 
 ### Step 3 - Monitor the pipeline job
@@ -99,8 +98,7 @@ $ terraform apply
 
 ### Step 6 - Finish and Clean up
 After completing your tasks, navigate to the terraform folder and delete the infrastructure you've created to avoid incurring unnecessary costs.
-```bash
-$ terraform destroy
+- $ terraform destroy
 
 
 ### Possible Future Work
