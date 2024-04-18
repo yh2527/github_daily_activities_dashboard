@@ -1,0 +1,41 @@
+version: 2
+
+sources:
+  - name: staging
+    database: github-activities-412623 # [CHANGE] GCP Project ID
+    schema: git_activities_warehouse # [CHANGE] BigQuery dataset name
+    
+    tables:
+      - name: github-today
+
+models:
+    - name: stg_git_daily_data # the name of the SQL file
+      description: Staged git activity data of yesterday.
+      columns: 
+        - name: id
+          description: Primary key for activities.
+          tests:
+            - unique
+            - not_null
+        - name: type
+          description: Type of the activity
+          tests:
+            - accepted_values:
+                values:
+                  - CommitCommentEvent
+                  - ForkEvent
+                  - IssueCommentEvent
+                  - IssuesEvent
+                  - MemberEvent
+                  - PullRequestEvent
+                  - PullRequestReviewCommentEvent
+                  - PullRequestReviewEvent
+                  - ReleaseEvent
+                  - PullRequestReviewThreadEvent
+                  - SponsorshipEvent
+                  - CreateEvent
+                  - DeleteEvent
+                  - GollumEvent
+                  - PublicEvent
+                  - WatchEvent
+                  - PushEvent

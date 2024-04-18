@@ -7,7 +7,7 @@ Github is the world's largest source code host. It is commonly used to host open
 GitHub, being the most popular platform for creating, storing, managing, and sharing code, serves as the focal point of this dashboard, which aims to illustrate how developers worldwide use GitHub. Our dashboard tracks the daily total count of public activities, identifies the top 10 users who authored the most commits, and lists the 10 most popular repositories that were starred or forked each day.
 
 
-Below is a screenshot of the dashboard:
+Below is a screenshot of the dashboard. The actual dashboard can be found [here](https://lookerstudio.google.com/s/hu76D8e84kU).
 
 <img src="instructions/07-dashboard.png" alt="07-dashboard" width="700" align="center"/>
 
@@ -59,9 +59,9 @@ It is assumed that you have installed, set up, and have access to the following 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="instructions/02-terraform.tfvars.png" alt="02-terraform.tfvars" width="700"/>
    
-2. Change your username and password in flow/.env for logging into the Airflow web UI.
+2. Change your username and password in ingestion/.env for logging into the Airflow web UI.
 
-3. Change your project id in flow/dags/ingestion.py
+3. Change your project id in ingestion/dags/ingestion.py
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="instructions/04-dag-var.png" alt="04-dag-var" width="600"/>
     
@@ -77,7 +77,7 @@ It is assumed that you have installed, set up, and have access to the following 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="instructions/03-terraform-complete.png" alt="03-terraform-complete" width="500"/>
     
-2. Wait a few minutes for the Airflow docker to bring up the web UI. Then open the UI through http://(change to your vm IP)35.235.66.228:8080/ using the username and password you previously set in the flow/.env file.
+2. Wait a few minutes for the Airflow docker to bring up the web UI. Then open the UI through http://(change to your vm IP)35.235.66.228:8080/ using the username and password you previously set in the ingestion/.env file.
 3. Once all 6 DAG tasks finish running, data files should be in google cloud storage and a clustered table should have been created in BigQuery. Partition is not used because it doesn't fit our use case for this data pipeline.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="instructions/06-airflow-dag.png" alt="06-airflow-dag" width="300"/>
