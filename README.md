@@ -7,7 +7,7 @@ Github is the world's largest source code host. It is commonly used to host open
 GitHub, being the most popular platform for creating, storing, managing, and sharing code, serves as the focal point of this dashboard, which aims to illustrate how developers worldwide use GitHub. Our dashboard tracks the daily total count of public activities, identifies the top 10 users who authored the most commits, and lists the 10 most popular repositories that were starred or forked each day.
 
 
-Below is a screenshot of the dashboard. The actual dashboard can be found [here](https://lookerstudio.google.com/s/hu76D8e84kU).
+Below is a screenshot of the dashboard. 
 
 <img src="instructions/07-dashboard.png" alt="07-dashboard" width="700" align="center"/>
 
@@ -94,7 +94,7 @@ It is assumed that you have installed, set up, and have access to the following 
 
 
 ### Step 5 - Dashboard
-- A sample dashboard can be found [here](https://lookerstudio.google.com/s/hu76D8e84kU)
+- The sample dashboard is temporarily inactive becuase the cloud account trial has ended. [Link here](https://lookerstudio.google.com/s/hu76D8e84kU)
 
 ### Step 6 - Finish and Clean up
 After completing your tasks, navigate to the terraform folder and delete the infrastructure you've created to avoid incurring unnecessary costs.
