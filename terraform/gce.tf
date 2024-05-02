@@ -93,41 +93,28 @@ resource "google_compute_instance" "default" {
   }
   
   provisioner "file" {
-    source      = "../flow/step1_set_up_vm.sh"
+    source      = "../ingestion/set_up_vm.sh"
     destination = "/tmp/step1_set_up_vm.sh"
   }
   provisioner "file" {
-    source      = "../flow/docker-compose.yaml"
+    source      = "../ingestion/docker-compose.yaml"
     destination = "/tmp/docker-compose.yaml"
   }
   provisioner "file" {
-    source      = "../flow/.env"
+    source      = "../ingestion/.env"
     destination = "/tmp/.env"
   }
-  /*provisioner "file" {
-    source      = "../flow/run_airflow_dag.sh"
-    destination = "/tmp/run_airflow_dag.sh"
-  }*/
   provisioner "file" {
-    source      = "../flow/dags/ingestion.py"
+    source      = "../ingestion/dags/ingestion.py"
     destination = "/tmp/ingestion.py"
   }
-  /*provisioner "file" {
-    source      = "../flow/fhv_download_ingest.sh"
-    destination = "/tmp/fhv_download_ingest.sh"
-  }*/
   
   provisioner "remote-exec" {
     inline = [
       "cd /tmp",
       "chmod +x ./step1_set_up_vm.sh",
-      #"chmod +x ./run_airflow_dag.sh",
-      #"chmod +x ./fhv_download_ingest.sh",
       "sudo ./step1_set_up_vm.sh",
       "sudo mv ./ingestion.py ./dags/ingestion.py",
-      #"sleep 30",
-      #"sudo ./run_airflow_dag.sh",
-      #"sudo ./fhv_download_ingest.sh"
     ]
   }
   connection {
